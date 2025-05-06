@@ -1,47 +1,163 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Admin Login</title>
-    <style>
-        body {
-            background: #121212;
-            color: #fff;
-            font-family: 'Arial';
-            text-align: center;
-            padding-top: 100px;
-        }
-        input, button {
-            padding: 10px;
-            margin: 10px;
-            border: none;
-            border-radius: 5px;
-        }
-        button {
-            background-color: #00ff88;
-            color: #000;
-            font-weight: bold;
-            cursor: pointer;
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Matrix AI Assistant</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: url('https://i.imgur.com/nfnHcHc.gif') no-repeat center center fixed;
+      background-size: cover;
+      color: #fff;
+    }
+
+    .overlay {
+      background-color: rgba(0, 0, 0, 0.8);
+      min-height: 100vh;
+      padding: 40px 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 30px;
+      animation: fadeIn 1.5s ease-in-out;
+    }
+
+    header h1 {
+      font-size: 42px;
+      margin: 0;
+    }
+
+    .chat-box {
+      width: 90%;
+      max-width: 700px;
+      background-color: rgba(255, 255, 255, 0.05);
+      border-radius: 15px;
+      padding: 20px;
+      overflow-y: auto;
+      height: 60vh;
+      margin-bottom: 20px;
+    }
+
+    .message {
+      margin: 10px 0;
+    }
+
+    .user {
+      text-align: right;
+      color: #00ff88;
+    }
+
+    .bot {
+      text-align: left;
+      color: #00ccff;
+    }
+
+    .input-area {
+      display: flex;
+      justify-content: center;
+      width: 90%;
+      max-width: 700px;
+    }
+
+    .input-area input {
+      flex: 1;
+      padding: 10px;
+      font-size: 16px;
+      border-radius: 10px;
+      border: none;
+      margin-right: 10px;
+    }
+
+    .input-area button {
+      padding: 10px 20px;
+      background-color: #00ff88;
+      color: black;
+      border: none;
+      border-radius: 10px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    .input-area button:hover {
+      background-color: #00cc6a;
+    }
+
+    footer {
+      margin-top: 30px;
+      color: #aaa;
+      font-size: 14px;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
 </head>
 <body>
-    <h1>Admin Login</h1>
-    <input type="text" id="username" placeholder="Username"><br>
-    <input type="password" id="password" placeholder="Password"><br>
-    <button onclick="login()">Login</button>
+  <div class="overlay">
+    <header>
+      <h1>Matrix AI Assistant</h1>
+      <p>Talk to your digital sidekick.</p>
+    </header>
 
-    <script>
-        function login() {
-            const user = document.getElementById("username").value;
-            const pass = document.getElementById("password").value;
-            if (user === "admin" && pass === "1234") {
-                alert("Access Granted");
-                // For now, we'll stay on the page
-                // Later: window.location.href = "dashboard.html";
-            } else {
-                alert("Access Denied");
-            }
-        }
-    </script>
+    <div class="chat-box" id="chatBox">
+      <div class="message bot">Hello! I'm your AI. Ask me anything!</div>
+    </div>
+
+    <div class="input-area">
+      <input type="text" id="userInput" placeholder="Type your question...">
+      <button onclick="sendMessage()">Send</button>
+    </div>
+
+    <footer>
+      <p>Made with me</p>
+    </footer>
+  </div>
+
+  <script>
+    function sendMessage() {
+      const input = document.getElementById('userInput');
+      const message = input.value.trim();
+      if (!message) return;
+
+      const chatBox = document.getElementById('chatBox');
+
+      // Add user message
+      const userMsg = document.createElement('div');
+      userMsg.className = 'message user';
+      userMsg.textContent = message;
+      chatBox.appendChild(userMsg);
+
+      // Simulate bot response
+      const botMsg = document.createElement('div');
+      botMsg.className = 'message bot';
+      botMsg.textContent = getBotReply(message);
+      chatBox.appendChild(botMsg);
+
+      input.value = '';
+      chatBox.scrollTop = chatBox.scrollHeight;
+    }
+
+    function getBotReply(input) {
+      input = input.toLowerCase();
+      if (input.includes("hello") || input.includes("hi")) {
+        return "Hey there! What can I help you with today?";
+      } else if (input.includes("help")) {
+        return "I can help with homework, workouts, or just chat. Try asking me something!";
+      } else if (input.includes("who are you")) {
+        return "I'm your Matrix AI Assistant. Built different 💻";
+      } else {
+        return "That's interesting! Tell me more."
+      }
+    }
+  </script>
 </body>
 </html>
